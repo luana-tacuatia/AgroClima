@@ -8,7 +8,8 @@ import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
   { href: "/", label: "Início" },
-  { href: "/comparar", label: "Comparar previsões" },
+  { href: "/comparar", label: "Comparar" },
+  { href: "/historico", label: "Histórico" },
 ] as const;
 
 export function AppNavbar() {

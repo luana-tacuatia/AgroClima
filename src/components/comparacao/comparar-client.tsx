@@ -29,6 +29,8 @@ export function CompararClient() {
       lon: String(location.longitude),
       name: location.name,
     });
+    if (location.state) params.set("state", location.state);
+    if (location.country) params.set("country", location.country);
     try {
       const response = await fetch(`/api/forecast?${params.toString()}`);
       const data = (await response.json()) as ForecastResponse;
