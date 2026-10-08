@@ -1,72 +1,69 @@
 # AgroClima Memory
 
 ## Current State
-- **Fases 1 a 5:** concluídas.
-- **Fase 1 (preparação):** bootstrap Next.js + TS + Tailwind + shadcn.
-- **Fase 2 (localização):** busca de cidade, geolocalização, última localidade em `localStorage`.
-- **Fase 3 (providers):** Open-Meteo + WeatherAPI.com em paralelo, normalização, alinhamento por data,
-  cache em memória (~30 min), resposta parcial. Chave WeatherAPI válida e testada ao vivo.
-- **Fase 4 (cálculos + testes):** `src/lib/weather/compare.ts` (revisado, correto) + 30 testes Vitest
-  passando (`npm test`). Fix da dev nos campos diários da WeatherAPI validado ao vivo
-  (`mintemp_c`, `maxtemp_c`, `avghumidity`, `totalprecip_mm`, `daily_chance_of_rain`, `maxwind_kph`).
-- **Fase 5 (interface comparativa):** concluída nesta sessão:
-  - `src/components/layout/app-navbar.tsx` (sticky, logo Leaf, links Início/Comparar, aria-current)
-  - `src/components/layout/app-footer.tsx` (fontes + disclaimer)
-  - `src/components/location/search-card.tsx` (busca + geo + local selecionada, compartilhado)
-  - `src/components/comparacao/forecast-comparison-chart.tsx` (Recharts 3, linhas OM contínuas /
-    WA tracejadas, máx grossa + mín fina, tooltip pt-BR, nulls respeitados)
-  - `page.tsx` (hero emerald + 3 destaques + busca col lateral + atalho p/ /comparar)
-  - `comparar/page.tsx` (bandeau + CompararClient + explicação de concordância + footer)
-  - `comparison-view.tsx` e `comparar-client.tsx` atualizados (SearchCard, gráfico entre resumo e cards)
-- `npm run lint` ✅ · `npm run build` ✅ · `npm test` 30/30 ✅ · páginas 200 ✅
-- Supabase (esboço da dev, Fase 6): `supabase/schema.sql` (RLS) + `src/lib/supabase/history.ts`
-  (PostgREST, sem lib). `saveForecastSnapshots` AINDA NÃO chamado pela rota /api/forecast.
+- **Fases 1 a 5:** concluídas. **Fase 6:** código concluído; falta rodar o `schema.sql` no banco (ação do usuário).
+- **Fase 6 (Supabase e histórico) — o que foi feito nesta sessão:**
+  - `env.ts`: aceita `SUPABASE_SERVICE_ROLE_KEY` (antigo) OU `SUPABASE_SECRET_KEY` (painel novo do Supabase — o usuário tem esse nome).
+  - `history.ts`: header sempre com `Authorization: Bearer` (compatível com chaves `sb_secret_...`).
+  - Rota `/api/forecast`: salva snapshots via `saveForecastSnapshots` (não bloqueia; falha → `history.saved=false`).
+    Schema de forecast ganhou `state`/`country` opcionais; os clientes (`page.tsx`, `comparar-client.tsx`) passam.
+  - Nova rota `GET /api/history?lat&lon&limit` (default 20, máx 100; sem raw_data; 502 com detail em erro;
+    `{enabled:false}` quando Supabase não configurado).
+  - Nova página `/historico` (server component lê searchParams; client agrupa snapshots por `collected_at`,
+    busca alternativa via SearchCard, estados: vazio/desativado/erro/Carregando + botão Atualizar).
+  - Navbar: 3 links (Início / Comparar / Histórico).
+- **Diagnóstico atual (testado ao vivo):** autenticação no Supabase OK; endpoint responde
+  `PGRST205 "Could not find the table 'public.locations' in the schema cache"` → **o usuário ainda não
+  executou `supabase/schema.sql` no SQL Editor do Supabase**. Após executar: invalidar schema cache
+  (Database → Schema cache → Invalidate) e retestar.
+- `npm run lint` ✅ · `npm run build` ✅ (rotas: /, /comparar, /historico, /api/forecast, /api/history, /api/locations) · `npm test` 30/30 ✅
 
 ## Important Files
-- `PROJECT.md` — especificação (fonte da verdade). `README.md` — Status por fase atual.
-- `src/lib/weather/compare.ts` + `src/types/comparison.ts` — cálculos.
-- `tests/weather-calculations.test.ts` + `vitest.config.mts` — testes (alias `@/`).
-- `src/components/layout/*` — navbar/footer (nova identidade: emerald-600/teal + slate, fonte Geist).
-- `src/components/location/search-card.tsx` — busca compartilhada nas 2 páginas.
+- `PROJECT.md` — especificação. `README.md` — Status por fase (Fase 6 com pendência do banco anotada).
+- `supabase/schema.sql` — tabelas locations + forecast_snapshots (RLS habilitado, sem políticas).
+- `src/lib/supabase/history.ts` — PostgREST puro (fetch): saveForecastSnapshots, getRecentSnapshots, isHistoryEnabled.
+- `src/app/api/forecast/route.ts` — cache 30 min + save de snapshots.
+- `src/app/api/history/route.ts` — nova rota de histórico.
+- `src/app/historico/page.tsx` + `src/components/historico/history-client.tsx` — página de histórico.
+- `src/components/layout/app-navbar.tsx` — 3 links com aria-current.
+- `src/lib/weather/compare.ts` + `tests/weather-calculations.test.ts` — cálculos + 30 testes.
 - `src/components/comparacao/forecast-comparison-chart.tsx` — gráfico Recharts.
-- `src/app/api/forecast/route.ts` — cache Map+TTL 30 min; 502 falha total; 200 parcial.
-- `src/lib/weather/providers/*` — providers; `src/lib/env.ts`, `src/lib/http.ts`.
-- `src/lib/supabase/history.ts` + `supabase/schema.sql` — a ligar na Fase 6.
 
 ## Environment Notes
 - macOS arm64, Node 20.11.0 (projeto declara 24.19.x; npm só avisa).
-- Ferramenta `create_new_file` falha intermitentemente ("contents argument is required") →
-  criar arquivos via `cat > arquivo << 'EOF'` no terminal.
-- `edit_existing_file`/`single_find_and_replace` às vezes "funcionam" mas não aplicam (glitch);
-  SEMPRE conferir o arquivo (sed/grep) após editar e, se mudou o conteúdo além do esperado,
-  re-aplicar. O buffer do editor do usuário + Ctrl+Z também sobrescreveu arquivos antes —
-  pedir para fechar/reverter o arquivo no editor antes de editar.
+- `.env` usa os nomes NOVOS do Supabase: SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, SUPABASE_SECRET_KEY,
+  SUPABASE_JWKS_URL (sem SUPABASE_SERVICE_ROLE_KEY — o env.ts agora aceita SECRET_KEY como fallback).
+  Não ler .env (bloqueado); checar presença com grep de nomes.
+- `create_new_file` falha intermitentemente → criar arquivos com `cat > arquivo << 'EOF'`.
+- Edits às vezes "aplicam" mas não persistem → conferir sempre com grep/sed após editar.
 - Dev server: `npm run dev` em background, log `/tmp/agroclima-dev.log`; parar com `pkill -f "next dev"`.
-- Git: branch `feature/comparacao-concordancia` com tracking do origin.
+- Git: branch `feature/comparacao-concordancia` com tracking do origin. Usuário comita por conta própria.
 
 ## Decisions
-- Fonte 2 = WeatherAPI.com (usuário trocou da OpenWeatherMap, onde a conta errada havia sido criada).
-- Identidade visual Fase 5: verde emerald/teal + slate, cards brancos com borda leve, cantos 1.5rem,
-  navbar sticky com blur, badge de página ativa em emerald.
-- Gráfico: temperatura min/máx (a métrica com série mais contínua p/ 3 dias); 4 linhas
-  (2 fontes × máx/mín) em vez de áreas para manter legível no mobile.
-- Recharts 3.10.1; tooltip/legend customizados via `formatter`; `connectNulls=false`
-  (ausência nunca é zero).
-- Busca extraída em `SearchCard` para as duas páginas usarem o mesmo componente.
+- Fonte 2 = WeatherAPI.com. Supabase via PostgREST puro (sem @supabase/supabase-js) — decisão da dev, mantida.
+- Save de snapshots: `await` na rota (garante conclusão no serverless); erro tratado internamente
+  (retorna {saved:false, reason}) e nunca quebra a previsão.
+- `locations.country` NOT NULL → default "BR" quando o cliente não informa (caso geolocalização).
+- Histórico agrupa por `collected_at` idêntico (INSERT em lote usa now() da transação → mesma marca).
+- Navbar: rótulos curtos (Início/Comparar/Histórico) para caber em 360px.
 
 ## Validation History
-- Build passou após ajustar tipagem do `Tooltip.formatter` (Recharts 3: value/dataKey podem ser undefined).
-- `GET /api/forecast` (Campinas): 2 fontes ok, 3 dias cada, prob. de chuva presente.
-- HTML das páginas confirmado: navbar nas duas, hero, SearchCard, estados vazios.
-- 30/30 testes continuam passando.
+- Build passou com as rotas novas (/api/history, /historico).
+- Ao vivo: /api/forecast (Campinas) → 2 fontes ok + `history.saved=false` (motivo: tabela inexistente).
+- Ao vivo: /api/history → 502 com detail "Supabase respondeu com status 404" (PGRST205).
+- Autenticação com SUPABASE_SECRET_KEY + Bearer funcionando (erro é de schema, não de auth).
+- /historico: 200; navbar com 3 links confirmada no HTML.
 
 ## Next Steps
-1. Commit da Fase 5 (navbar, footer, search-card, gráfico, páginas, recharts, README).
-2. Fase 6: ligar `saveForecastSnapshots` em `/api/forecast` (após a resposta, try/catch não bloqueante),
-   criar `GET /api/history?lat&lon&limit` e página `/historico` + link na navbar.
-   Lembrete: rodar `supabase/schema.sql` no SQL Editor do Supabase (RLS já habilitado no script).
-3. Fase 7: PWA (`manifest.ts`, ícones em `public/icons`, service worker) + deploy Vercel.
-4. Fase 8: screenshots + documentação final (decisões, limitações, roteiro de demo).
+1. **Ação do usuário:** rodar `supabase/schema.sql` no SQL Editor do Supabase; se persistir PGRST205,
+   invalidar o schema cache (Database → Schema cache → Invalidate).
+2. Reteste: `GET /api/forecast?lat=-22.9056&lon=-47.0608&name=...` (nome novo p/ pular cache) →
+   `history.saved=true`; depois `GET /api/history?lat=-22.9056&lon=-47.0608` → snapshots.
+   = critério de conclusão da Fase 6 ("uma consulta aparece no histórico").
+3. Commit da Fase 6 (usuário comita por conta).
+4. Fase 7: PWA (`src/app/manifest.ts`, ícones em `public/icons/`, service worker) + deploy Vercel
+   (configurar WEATHER_API_KEY + SUPABASE_URL + SUPABASE_SECRET_KEY nas envs da Vercel).
+5. Fase 8: screenshots, documentação final, roteiro de demo.
 
 ## Resume Rule
 - Para continuar em outra máquina: ler `PROJECT.md` e depois este arquivo.
