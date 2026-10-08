@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { alignForecastDays } from "@/lib/weather/normalize";
 import { WEATHER_PROVIDERS, WEATHER_SOURCE_IDS, WeatherApiKeyMissingError } from "@/lib/weather/providers";
 import { FORECAST_CACHE_TTL_MS } from "@/lib/weather/constants";
+import { saveForecastSnapshots } from "@/lib/supabase/history";
 import { forecastQuerySchema, type ForecastQuery } from "@/schemas/forecast";
 import type { DailyForecast, ForecastResponse, SourceStatus, WeatherSource } from "@/types/forecast";
 
@@ -66,6 +67,8 @@ export async function GET(request: NextRequest) {
     lat: searchParams.get("lat"),
     lon: searchParams.get("lon"),
     name: searchParams.get("name") ?? undefined,
+    state: searchParams.get("state") ?? undefined,
+    country: searchParams.get("country") ?? undefined,
   });
 
   if (!validation.success) {
@@ -75,7 +78,7 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  const { lat, lon, name } = validation.data;
+  const { lat, lon, name, state, country } = validation.data;
   const key = `${lat.toFixed(4)}:${lon.toFixed(4)}:${name ?? ""}`;
 
   const cached = forecastCache.get(key);
@@ -83,7 +86,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ ...cached.response, cached: true });
   }
 
-  const response = await buildForecastResponse({ lat, lon, name });
+  const response = await buildForecastResponse({ lat, lon, name, state, country });
 
   const allFailed = WEATHER_SOURCE_IDS.every(
     (sourceId) => response.sourceStatus[sourceId].status === "error"
@@ -95,10 +98,25 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(response, { status: 502 });
   }
 
+  // Fase 6: salva o snapshot da consulta. A falha de persistência NÃO
+  // impede a exibição da previsão (PROJECT.md, seção 4).
+  const savedForecasts = response.days.flatMap((day) => Object.values(day.bySource));
+  const history = await saveForecastSnapshots(
+    {
+      name: response.location.name,
+      state: state ?? null,
+      country: country ?? "BR",
+      latitude: lat,
+      longitude: lon,
+    },
+    savedForecasts,
+  );
+
   forecastCache.set(key, {
     expiresAt: Date.now() + FORECAST_CACHE_TTL_MS,
     response,
   });
 
-  return NextResponse.json({ ...response, cached: false });
+  return NextResponse.json({ ...response, history, cached: false });
 }
+
