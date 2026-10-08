@@ -22,11 +22,11 @@ export function getServerEnv(): ServerEnv {
 
   const weatherApiKey = parseOptionalStringVar("WEATHER_API_KEY", process.env.WEATHER_API_KEY, 10);
   const supabaseUrl = parseSupabaseUrl(process.env.SUPABASE_URL);
-  const supabaseServiceRoleKey = parseOptionalStringVar(
-    "SUPABASE_SERVICE_ROLE_KEY",
-    process.env.SUPABASE_SERVICE_ROLE_KEY,
-    20
-  );
+  // O painel novo do Supabase chama a chave secreta de "SUPABASE_SECRET_KEY";
+  // o nome clássico é "SUPABASE_SERVICE_ROLE_KEY". Aceitamos os dois.
+  const supabaseServiceRoleKey =
+    parseOptionalStringVar("SUPABASE_SERVICE_ROLE_KEY", process.env.SUPABASE_SERVICE_ROLE_KEY, 20) ??
+    parseOptionalStringVar("SUPABASE_SECRET_KEY", process.env.SUPABASE_SECRET_KEY, 20);
 
   cachedEnv = {
     weatherApiKey,

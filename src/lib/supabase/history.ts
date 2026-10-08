@@ -16,9 +16,12 @@ function getSupabaseConfig(): { url: string; key: string } | null {
 const TIMEOUT_MS = 8_000;
 
 function headers(key: string, extra: Record<string, string> = {}): HeadersInit {
-  const base: Record<string, string> = { apikey: key, "Content-Type": "application/json", ...extra };
-  // Chaves antigas (JWT) também vão no Authorization; as novas (sb_secret_...) apenas no apikey.
-  if (key.startsWith("eyJ")) base.Authorization = `Bearer ${key}`;
+  const base: Record<string, string> = {
+    apikey: key,
+    Authorization: `Bearer ${key}`,
+    "Content-Type": "application/json",
+    ...extra,
+  };
   return base;
 }
 
