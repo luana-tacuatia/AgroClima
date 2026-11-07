@@ -257,7 +257,7 @@ export function HistoryClient({ initialLocation }: HistoryClientProps) {
                     >
                       {style.label}
                     </span>
-                    <span className="text-xs text-slate-400">previsão {formatForecastDate(snapshot.forecast_date)}</span>
+                    <span className="text-xs text-slate-500">previsão {formatForecastDate(snapshot.forecast_date)}</span>
                     <span className="ml-auto text-xs text-slate-600 tabular-nums">
                       mín {formatMetric(snapshot.temperature_min_c)}°C · máx {formatMetric(snapshot.temperature_max_c)}°C
                       {" · "}umidade {formatMetric(snapshot.humidity_percent)}%

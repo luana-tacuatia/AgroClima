@@ -90,7 +90,7 @@ function DayCard({ day }: { day: AlignedForecastDay }) {
                     className="flex items-baseline justify-between gap-2 text-sm"
                   >
                     <span
-                      className="text-[0.65rem] font-semibold uppercase text-slate-400"
+                      className="text-[0.65rem] font-semibold uppercase text-slate-500"
                       title={SOURCE_LABELS[sourceId]}
                     >
                       {SOURCE_ABBREVIATIONS[sourceId]}
@@ -98,7 +98,7 @@ function DayCard({ day }: { day: AlignedForecastDay }) {
                     <span
                       className={cn(
                         "tabular-nums",
-                        value === null ? "text-slate-400" : "text-slate-900"
+                        value === null ? "text-slate-500" : "text-slate-900"
                       )}
                     >
                       {formatValue(value, metric.unit)}

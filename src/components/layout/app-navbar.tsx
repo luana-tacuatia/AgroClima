@@ -17,8 +17,8 @@ export function AppNavbar() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/85 backdrop-blur-lg">
-      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
-        <Link href="/" className="flex min-w-0 items-center gap-2.5">
+      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-2 px-3 sm:gap-3 sm:px-6">
+        <Link href="/" className="flex min-w-0 items-center gap-2 sm:gap-2.5">
           <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-sm">
             <Leaf className="h-5 w-5" aria-hidden />
           </span>
@@ -32,7 +32,7 @@ export function AppNavbar() {
           </span>
         </Link>
 
-        <nav aria-label="Principal" className="flex items-center gap-1">
+        <nav aria-label="Principal" className="flex items-center gap-0.5 sm:gap-1">
           {NAV_LINKS.map((link) => {
             const active =
               link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
@@ -42,7 +42,7 @@ export function AppNavbar() {
                 href={link.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium transition-colors sm:px-4",
+                  "whitespace-nowrap rounded-full px-2 py-2 text-sm font-medium transition-colors sm:px-4",
                   active
                     ? "bg-emerald-50 text-emerald-800"
                     : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
