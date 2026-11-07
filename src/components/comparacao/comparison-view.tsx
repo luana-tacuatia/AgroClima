@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { AgreementBadge } from "@/components/comparacao/agreement-badge";
+import { AgreementGuide } from "@/components/comparacao/agreement-guide";
 import { ForecastComparisonChart } from "@/components/comparacao/forecast-comparison-chart";
 import { METRIC_KEYS, compareAlignedDays } from "@/lib/weather/compare";
 import { cn } from "@/lib/utils";
@@ -46,7 +47,10 @@ function summary(day: DailyComparison): string {
   );
   if (day.overallAgreement === "unavailable") return "Apenas uma fonte disponível: não é possível comparar.";
   if (low.length === 0) return "As fontes estão próximas em todas as variáveis.";
-  return `As fontes divergem em: ${low.join(", ")}. Acompanhe as atualizações antes de decisões sensíveis a essas condições.`;
+  const affected = METRIC_KEYS.filter((key) => day.metrics[key].agreement === "low").map((key) =>
+    METRICS[key].hint.toLowerCase(),
+  );
+  return `As fontes divergem em: ${low.join(", ")}. Isso afeta decisões como: ${affected.join("; ")}. Confira o valor de cada fonte e consulte de novo mais perto da data.`;
 }
 
 function MetricCard({ metricKey, metric }: { metricKey: MetricKey; metric: MetricComparison }) {
@@ -77,17 +81,16 @@ function MetricCard({ metricKey, metric }: { metricKey: MetricKey; metric: Metri
 
       <dl className="mt-4 space-y-2">
         {rows.map((row) => (
-          <div key={row.name}>
-            <div className="flex items-center justify-between text-xs">
-              <dt className="flex items-center gap-1.5 text-slate-600">
-                <span className="h-2 w-2 rounded-full" style={{ backgroundColor: row.color }} aria-hidden />
-                {row.name}
-              </dt>
-              <dd className="font-medium text-slate-900">
-                {formatNumber(row.value, info.decimals)} {row.value !== null && info.unit}
-              </dd>
-            </div>
-            <div className="mt-1 h-1.5 w-full rounded-full bg-slate-100">
+          <div key={row.name} className="grid grid-cols-[1fr_auto] items-center gap-x-2 text-xs">
+            <dt className="flex items-center gap-1.5 text-slate-600">
+              <span className="h-2 w-2 rounded-full" style={{ backgroundColor: row.color }} aria-hidden />
+              {row.name}
+            </dt>
+            <dd className="font-medium text-slate-900">
+              {formatNumber(row.value, info.decimals)} {row.value !== null && info.unit}
+            </dd>
+            {/* Barra apenas visual: o valor já está no texto acima. */}
+            <dd className="col-span-2 mt-1 h-1.5 w-full rounded-full bg-slate-100" aria-hidden>
               {row.value !== null && (
                 <div
                   className="h-1.5 rounded-full"
@@ -97,7 +100,7 @@ function MetricCard({ metricKey, metric }: { metricKey: MetricKey; metric: Metri
                   }}
                 />
               )}
-            </div>
+            </dd>
           </div>
         ))}
       </dl>
@@ -161,6 +164,8 @@ export function ComparisonView({ data }: { data: ForecastResponse }) {
         </div>
         <p className="mt-2 text-sm leading-6 text-slate-600">{summary(day)}</p>
       </div>
+
+      <AgreementGuide />
 
       <ForecastComparisonChart days={days} />
 

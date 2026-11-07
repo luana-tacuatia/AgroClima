@@ -54,6 +54,16 @@
 - Autenticação com SUPABASE_SECRET_KEY + Bearer funcionando (erro é de schema, não de auth).
 - /historico: 200; navbar com 3 links confirmada no HTML.
 
+## Alinhamento com o relatório (branch fix/alinhamento-relatorio)
+- compare.ts: ABSOLUTE_TOLERANCE (chuva ≤ 1 mm; prob. ≤ 10 p.p. → alta). compareMetric(a, b, key?).
+  Primeira aplicação: 28/09 passa de Média para Alta (chuva e prob. viram Alta); 29 e 30/09 sem mudança.
+- weather-api.ts: weatherApiErrorMessage() traduz códigos 1002/1003/1005/1006/2006/2007/2008/2009/9999.
+- /comparar: componente AgreementGuide ("Como ler a concordância") + resumo do dia cita as decisões afetadas.
+- Rodapé: "Powered by WeatherAPI.com" e Open-Meteo (CC BY 4.0).
+- 36 testes passando.
+- PWA (Fase 7, parte 1): src/app/manifest.ts (/manifest.webmanifest), ícones 192/512/maskable/apple em public/icons/, viewport.themeColor no layout. Sem service worker; deploy Vercel pendente.
+- Acessibilidade: auditoria axe-core 4.10 (WCAG 2.0/2.1/2.2 A e AA) em /, /comparar e /historico, 1280 e 390 px: 0 violações após ajustar contraste (slate-400→500, emerald-600→700) e a estrutura <dl> dos cards de comparação. Navbar sem corte do nome em 390 px.
+
 ## Next Steps
 1. **Ação do usuário:** rodar `supabase/schema.sql` no SQL Editor do Supabase; se persistir PGRST205,
    invalidar o schema cache (Database → Schema cache → Invalidate).

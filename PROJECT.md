@@ -389,6 +389,15 @@ sem os dois valores: indisponível
 
 Esses limites são uma regra interna do protótipo e não devem ser apresentados como padrão meteorológico oficial.
 
+Tolerância absoluta perto de zero (ajuste após a primeira aplicação com dados reais, 28/09/2026): para precipitação e probabilidade de chuva, se a diferença absoluta entre as fontes for pequena, a concordância é alta independentemente do percentual.
+
+```text
+precipitação: diferença até 1 mm → alta concordância
+probabilidade de chuva: diferença até 10 pontos percentuais → alta concordância
+```
+
+A divergência percentual continua sendo calculada e exibida. Os limiares são provisórios e serão revistos em novas aplicações (`ABSOLUTE_TOLERANCE` em `src/lib/weather/compare.ts`).
+
 ### 9.5 Concordância geral do dia
 
 Converter os níveis disponíveis em pontos:

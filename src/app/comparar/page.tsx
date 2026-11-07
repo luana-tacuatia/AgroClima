@@ -41,7 +41,9 @@ export default function CompararPage() {
               Para cada variável, o AgroClima calcula a média entre as fontes (valor
               consolidado) e a divergência percentual entre elas. Até 10% de
               divergência, a concordância é alta; acima de 10% até 25%, média; acima de
-              25%, baixa. Essas faixas são parâmetros do protótipo e não uma
+              25%, baixa. Para a chuva, diferenças de até 1 mm ou de até 10 pontos na
+              chance de chuva contam como alta concordância, porque com valores muito
+              pequenos o percentual fica exagerado. Essas faixas são parâmetros do protótipo e não uma
               classificação meteorológica oficial. Concordância alta não garante que a
               previsão vai se confirmar, e o AgroClima não substitui alertas oficiais
               nem orientação agronômica.

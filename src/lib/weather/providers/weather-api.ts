@@ -37,6 +37,32 @@ interface WeatherApiResponse {
   forecast?: { forecastday?: WeatherApiDayResponse[] };
 }
 
+/**
+ * Mensagens em português para os códigos de erro documentados da WeatherAPI.com
+ * (https://www.weatherapi.com/docs/, seção "Error Codes"). Códigos não mapeados
+ * recebem uma mensagem genérica com o código, sem expor detalhes da conta.
+ */
+const WEATHER_API_ERROR_MESSAGES: Record<number, string> = {
+  1002: "Chave da WeatherAPI não informada na consulta.",
+  1003: "Localidade não informada na consulta à WeatherAPI.",
+  1005: "Endereço de consulta da WeatherAPI inválido.",
+  1006: "A WeatherAPI não encontrou previsão para esta localidade.",
+  2006: "Chave da WeatherAPI inválida.",
+  2007: "Limite mensal de consultas da WeatherAPI atingido. Tente novamente no próximo mês.",
+  2008: "Chave da WeatherAPI desativada.",
+  2009: "O plano da WeatherAPI não dá acesso a este recurso.",
+  9999: "Erro interno da WeatherAPI. Tente novamente em alguns minutos.",
+};
+
+export function weatherApiErrorMessage(code: number | undefined, httpStatus?: number): string {
+  if (code !== undefined && WEATHER_API_ERROR_MESSAGES[code]) {
+    return WEATHER_API_ERROR_MESSAGES[code];
+  }
+  if (code !== undefined) return `A WeatherAPI retornou um erro (código ${code}).`;
+  if (httpStatus !== undefined) return `A WeatherAPI respondeu com o status HTTP ${httpStatus}.`;
+  return "Erro desconhecido retornado pela WeatherAPI.";
+}
+
 function toNumberOrNull(value: unknown): number | null {
   return typeof value === "number" && Number.isFinite(value) ? value : null;
 }
@@ -70,12 +96,12 @@ export async function fetchWeatherApiForecast(latitude: number, longitude: numbe
   const data = (await response.json().catch(() => null)) as WeatherApiResponse | null;
 
   if (!response.ok || !data) {
-    // Para erros 4xx/5xx com corpo legível, usa a mensagem da API (sem segredos).
-    throw new Error(data?.error?.message ?? `WeatherAPI respondeu ${response.status}`);
+    // Erros 4xx/5xx: traduz o código documentado da API para uma mensagem em português.
+    throw new Error(weatherApiErrorMessage(data?.error?.code, response.status));
   }
 
   if (data.error) {
-    throw new Error(data.error.message ?? "Erro retornado pela WeatherAPI.");
+    throw new Error(weatherApiErrorMessage(data.error.code));
   }
 
   const days: DailyForecast[] = [];

@@ -204,7 +204,7 @@ export function LocationSearch({ onSelect, initialValue = "" }: LocationSearchPr
                     {location.state ? (
                       <span className="text-slate-500"> · {location.state}</span>
                     ) : null}
-                    <span className="text-slate-400"> · {location.country}</span>
+                    <span className="text-slate-500"> · {location.country}</span>
                   </span>
                 </button>
               </li>

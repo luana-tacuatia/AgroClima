@@ -9,6 +9,7 @@ import {
   percentageDivergence,
 } from "@/lib/weather/compare";
 import { alignForecastDays } from "@/lib/weather/normalize";
+import { weatherApiErrorMessage } from "@/lib/weather/providers/weather-api";
 import type { DailyForecast, WeatherSource } from "@/types/forecast";
 
 function makeForecast(
@@ -127,6 +128,29 @@ describe("compareMetric (consolidação por métrica)", () => {
     expect(result.consolidated).toBe(6);
     expect(result.percentageDivergence).toBe(200);
     expect(result.agreement).toBe("low");
+  });
+});
+
+describe("compareMetric com tolerância absoluta perto de zero", () => {
+  it("chuva: até 1 mm de diferença é alta concordância (caso 28/09: 1,0 × 0,0 mm)", () => {
+    const result = compareMetric(1, 0, "precipitationMm");
+    expect(result.percentageDivergence).toBe(200); // o percentual continua informado
+    expect(result.agreement).toBe("high");
+  });
+
+  it("chuva: acima de 1 mm volta à regra percentual", () => {
+    expect(compareMetric(2.5, 0, "precipitationMm").agreement).toBe("low");
+    expect(compareMetric(12.4, 5, "precipitationMm").agreement).toBe("low");
+  });
+
+  it("chance de chuva: até 10 pontos é alta (caso 28/09: 4% × 6%)", () => {
+    expect(compareMetric(4, 6, "precipitationProbabilityPercent").agreement).toBe("high");
+    expect(compareMetric(90, 61, "precipitationProbabilityPercent").agreement).toBe("low");
+  });
+
+  it("métricas sem tolerância seguem só o percentual", () => {
+    expect(compareMetric(11, 23.8, "windSpeedMaxKmh").agreement).toBe("low");
+    expect(compareMetric(1, 0).agreement).toBe("low"); // sem key: regra original
   });
 });
 
@@ -297,5 +321,32 @@ describe("compareAlignedDays (fluxo completo da rota)", () => {
     // Dias com fonte única: indisponível
     expect(comparisons[1].overallAgreement).toBe("unavailable");
     expect(comparisons[2].overallAgreement).toBe("unavailable");
+  });
+});
+
+describe("weatherApiErrorMessage (mensagens de erro em português)", () => {
+  it("traduz os códigos citados no relatório (1006 e 2007)", () => {
+    expect(weatherApiErrorMessage(1006)).toMatch(/não encontrou previsão/);
+    expect(weatherApiErrorMessage(2007)).toMatch(/Limite mensal/);
+  });
+
+  it("código desconhecido ou ausente gera mensagem genérica", () => {
+    expect(weatherApiErrorMessage(1234)).toBe("A WeatherAPI retornou um erro (código 1234).");
+    expect(weatherApiErrorMessage(undefined, 503)).toBe("A WeatherAPI respondeu com o status HTTP 503.");
+  });
+});
+
+describe("supabaseHeaders", () => {
+  it("envia a chave nova (sb_secret_) apenas no cabeçalho apikey", async () => {
+    const { supabaseHeaders } = await import("@/lib/supabase/history");
+    const h = supabaseHeaders("sb_secret_abcdefghijklmnopqrstuvwxyz");
+    expect(h.apikey).toBe("sb_secret_abcdefghijklmnopqrstuvwxyz");
+    expect(h.Authorization).toBeUndefined();
+  });
+
+  it("mantém o Bearer para a chave clássica service_role (JWT)", async () => {
+    const { supabaseHeaders } = await import("@/lib/supabase/history");
+    const h = supabaseHeaders("eyJhbGciOiJIUzI1NiJ9.payload.assinatura");
+    expect(h.Authorization).toBe("Bearer eyJhbGciOiJIUzI1NiJ9.payload.assinatura");
   });
 });

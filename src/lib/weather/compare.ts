@@ -22,6 +22,16 @@ export const METRIC_KEYS: MetricKey[] = [
 export const HIGH_AGREEMENT_MAX = 10; // até 10%: alta
 export const MEDIUM_AGREEMENT_MAX = 25; // acima de 10% até 25%: média
 
+// Tolerância absoluta para valores próximos de zero (ajuste após a primeira aplicação,
+// 28/09/2026): com 1,0 mm × 0,0 mm de chuva ou 4% × 6% de chance de chuva, a divergência
+// percentual passava de 25% ("baixa"), embora as duas fontes indicassem ausência de chuva
+// relevante. Se a diferença absoluta não passar destes limites, a concordância é "alta",
+// independentemente do percentual. Limiares provisórios, a ajustar em novas aplicações.
+export const ABSOLUTE_TOLERANCE: Partial<Record<MetricKey, number>> = {
+  precipitationMm: 1, // até 1 mm de diferença
+  precipitationProbabilityPercent: 10, // até 10 pontos percentuais
+};
+
 const AGREEMENT_POINTS: Record<"high" | "medium" | "low", number> = {
   high: 3,
   medium: 2,
@@ -41,8 +51,12 @@ export function agreementFromDivergence(divergence: number): AgreementLevel {
   return "low";
 }
 
-/** Compara uma métrica das duas fontes. Ausência de dado nunca é tratada como zero. */
-export function compareMetric(a: number | null, b: number | null): MetricComparison {
+/**
+ * Compara uma métrica das duas fontes. Ausência de dado nunca é tratada como zero.
+ * Quando `key` é informada e a métrica tem tolerância absoluta, uma diferença pequena
+ * resulta em concordância alta mesmo que o percentual seja elevado.
+ */
+export function compareMetric(a: number | null, b: number | null, key?: MetricKey): MetricComparison {
   if (a === null || b === null) {
     return {
       sourceA: a,
@@ -54,13 +68,16 @@ export function compareMetric(a: number | null, b: number | null): MetricCompari
     };
   }
   const divergence = percentageDivergence(a, b);
+  const absoluteDifference = Math.abs(a - b);
+  const tolerance = key ? ABSOLUTE_TOLERANCE[key] : undefined;
+  const withinTolerance = tolerance !== undefined && absoluteDifference <= tolerance;
   return {
     sourceA: a,
     sourceB: b,
     consolidated: (a + b) / 2,
-    absoluteDifference: Math.abs(a - b),
+    absoluteDifference,
     percentageDivergence: divergence,
-    agreement: agreementFromDivergence(divergence),
+    agreement: withinTolerance ? "high" : agreementFromDivergence(divergence),
   };
 }
 
@@ -84,7 +101,7 @@ export function compareDay(
 ): DailyComparison {
   const metrics = {} as Record<MetricKey, MetricComparison>;
   for (const key of METRIC_KEYS) {
-    metrics[key] = compareMetric(sourceA?.[key] ?? null, sourceB?.[key] ?? null);
+    metrics[key] = compareMetric(sourceA?.[key] ?? null, sourceB?.[key] ?? null, key);
   }
   return {
     date,

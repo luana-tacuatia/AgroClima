@@ -35,7 +35,7 @@ export function SearchCard({ title, subtitle, selected, isLoading, onSelect }: S
             {selected.name}
             {selected.state ? `, ${selected.state}` : ""}
           </span>
-          <span className="shrink-0 font-normal text-emerald-600">
+          <span className="shrink-0 font-normal text-emerald-700">
             ({selected.latitude.toFixed(4)}, {selected.longitude.toFixed(4)})
           </span>
         </p>
