@@ -100,6 +100,8 @@ A divergência é convertida em um indicador de concordância:
 - acima de 10% até 25%: média concordância;
 - acima de 25%: baixa concordância.
 
+Para chuva, foi acrescentada uma tolerância absoluta: diferença de até 1 mm na precipitação ou de até 10 pontos na probabilidade de chuva conta como alta concordância, porque com valores muito pequenos o percentual fica exagerado (ex.: 1,0 mm × 0,0 mm = 200%). A página `/comparar` explica os níveis no bloco "Como ler a concordância".
+
 Essas faixas são parâmetros internos do protótipo e não representam uma classificação meteorológica oficial. Concordância entre duas fontes também não significa que a previsão está correta. Para avaliar acurácia, seria necessário comparar as previsões armazenadas com dados observados posteriormente.
 
 ## Tecnologias
@@ -285,10 +287,10 @@ Leia PROJECT.md e implemente somente a Fase 1. Preserve a arquitetura e o escopo
 - **Fase 1 (preparação):** concluída.
 - **Fase 2 (localização):** concluída — busca de cidade, geolocalização e última localidade em `localStorage`.
 - **Fase 3 (providers):** concluída — Open-Meteo e WeatherAPI.com consultadas em paralelo, normalizadas e alinhadas por data em `GET /api/forecast`, com cache de ~30 min e resposta parcial quando uma fonte falha.
-- **Fase 4 (cálculos e testes):** concluída — consolidação, diferença absoluta, divergência percentual e concordância implementadas em `src/lib/weather/compare.ts`, cobertas por 30 testes unitários (Vitest) em `tests/weather-calculations.test.ts`.
-- **Fase 5 (interface comparativa):** concluída — navbar unificada, identidade visual profissional (emerald/slate), gráfico comparativo de temperatura (Recharts) em `/comparar`, cards com consolidado + concordância e estados de erro/parcial.
+- **Fase 4 (cálculos e testes):** concluída — consolidação, diferença absoluta, divergência percentual e concordância implementadas em `src/lib/weather/compare.ts`, com tolerância absoluta perto de zero para chuva, cobertas por 36 testes unitários (inclui as mensagens de erro da WeatherAPI) (Vitest) em `tests/weather-calculations.test.ts`.
+- **Fase 5 (interface comparativa):** concluída — navbar unificada, identidade visual profissional (emerald/slate), gráfico comparativo de temperatura (Recharts) em `/comparar`, cards com consolidado + concordância, bloco "Como ler a concordância", estados de erro/parcial e mensagens em português para os erros da WeatherAPI (ex.: 1006, 2007).
 - **Fase 6 (Supabase e histórico):** código concluído — cada consulta salva snapshots no Supabase (falha não bloqueia a previsão), `GET /api/history?lat&lon&limit` (limite máx. 100, sem `raw_data`) e página `/historico` com consultas agrupadas. ⚠️ Pendência no banco: executar `supabase/schema.sql` no SQL Editor do Supabase (e invalidar o schema cache, se necessário).
-- **Próxima:** Fase 7 (PWA: `manifest.ts`, ícones, service worker + deploy Vercel).
+- **Fase 7 (PWA e deploy):** em andamento — `src/app/manifest.ts`, ícones em `public/icons/` e `theme-color` permitem instalar o app na tela inicial. Falta: service worker (uso offline) e deploy na Vercel.
 
 ## Equipe
 
