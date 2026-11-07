@@ -7,7 +7,7 @@ export function AppFooter() {
         <p className="flex items-center gap-2 text-sm text-slate-600">
           <CloudSun className="h-4 w-4 shrink-0 text-emerald-600" aria-hidden />
           <span>
-            Fontes:{" "}
+            Dados:{" "}
             <a
               href="https://open-meteo.com/"
               target="_blank"
@@ -16,18 +16,18 @@ export function AppFooter() {
             >
               Open-Meteo
             </a>{" "}
-            e{" "}
+            (CC BY 4.0) e{" "}
             <a
               href="https://www.weatherapi.com/"
               target="_blank"
               rel="noreferrer"
               className="font-medium text-emerald-700 underline-offset-2 hover:underline"
             >
-              WeatherAPI.com
+              Powered by WeatherAPI.com
             </a>
           </span>
         </p>
-        <p className="text-xs leading-5 text-slate-400">
+        <p className="text-xs leading-5 text-slate-500">
           Projeto acadêmico Univesp · Previsões de 3 dias · Não substitui alertas
           meteorológicos oficiais.
         </p>
