@@ -15,15 +15,22 @@ function getSupabaseConfig(): { url: string; key: string } | null {
 
 const TIMEOUT_MS = 8_000;
 
-function headers(key: string, extra: Record<string, string> = {}): HeadersInit {
+/**
+ * Cabeçalhos do PostgREST. As chaves novas do Supabase (sb_secret_...) não são JWT e devem ir
+ * só no cabeçalho `apikey`; a chave clássica service_role (JWT, começa com "eyJ") também vai
+ * no `Authorization: Bearer`.
+ */
+export function supabaseHeaders(key: string, extra: Record<string, string> = {}): Record<string, string> {
   const base: Record<string, string> = {
     apikey: key,
-    Authorization: `Bearer ${key}`,
     "Content-Type": "application/json",
     ...extra,
   };
+  if (key.startsWith("eyJ")) base.Authorization = `Bearer ${key}`;
   return base;
 }
+
+const headers = supabaseHeaders;
 
 export function isHistoryEnabled(): boolean {
   return getSupabaseConfig() !== null;
