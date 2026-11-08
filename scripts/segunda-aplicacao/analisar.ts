@@ -20,6 +20,9 @@ const OUT_DIR = join(DIR, "resultados");
 
 interface City {
   name: string;
+  uf?: string;
+  region?: string;
+  group?: string;
   slug: string;
   latitude: number;
   longitude: number;
@@ -118,13 +121,15 @@ async function main() {
       if (!b) continue;
       const day = compareDay(a.date, a, b);
       const lead = daysBetween(c.collectionDate, a.date);
-      days.push({ coleta: c.collectionDate, cidade: c.city.name, data: a.date, antecedencia_dias: lead,
+      days.push({ coleta: c.collectionDate, regiao: c.city.region ?? "", grupo: c.city.group ?? "",
+        cidade: c.city.name, uf: c.city.uf ?? "", data: a.date, antecedencia_dias: lead,
         concordancia_geral: PT[day.overallAgreement] });
       for (const key of METRIC_KEYS) {
         const m = day.metrics[key];
         const original = compareMetric(m.sourceA, m.sourceB); // sem tolerância (regra original)
         comparisons.push({
-          coleta: c.collectionDate, hora_coleta: c.collectedAt, cidade: c.city.name, data: a.date,
+          coleta: c.collectionDate, hora_coleta: c.collectedAt, regiao: c.city.region ?? "",
+          grupo: c.city.group ?? "", cidade: c.city.name, uf: c.city.uf ?? "", slug: c.city.slug, data: a.date,
           antecedencia_dias: lead, variavel: key, open_meteo: m.sourceA, weather_api: m.sourceB,
           consolidado: m.consolidated, diferenca: m.absoluteDifference, divergencia_pct: m.percentageDivergence,
           concordancia: PT[m.agreement], concordancia_regra_original: PT[original.agreement],
@@ -163,12 +168,27 @@ async function main() {
   console.log("Concordância geral dos dias");
   console.table(overall);
 
+  const regions = [...new Set(days.map((d) => d.regiao as string))].filter(Boolean).sort();
+  const byRegion = regions.map((reg) => {
+    const ds = days.filter((d) => d.regiao === reg);
+    const rain = comparisons.filter((r) => r.regiao === reg && r.variavel === "precipitationMm");
+    const pct = (lvl: AgreementLevel) => r1((100 * ds.filter((d) => d.concordancia_geral === PT[lvl]).length) / (ds.length || 1));
+    return {
+      Região: reg, Dias: ds.length, "Alta %": pct("high"), "Média %": pct("medium"), "Baixa %": pct("low"),
+      "Chuva com baixa concordância %": r1((100 * rain.filter((r) => r.concordancia === "Baixa").length) / (rain.length || 1)),
+    };
+  });
+  if (byRegion.length) {
+    console.log("Concordância geral por região");
+    console.table(byRegion);
+  }
+
   // ---------- 2) Comparação com o observado ----------
   const today = new Date().toISOString().slice(0, 10);
   const cities = new Map(collections.map((c) => [c.city.slug, c.city]));
   const errors: Record<string, unknown>[] = [];
   for (const [slug, city] of cities) {
-    const dates = comparisons.filter((r) => r.cidade === city.name).map((r) => r.data as string);
+    const dates = comparisons.filter((r) => r.slug === slug).map((r) => r.data as string);
     if (!dates.length) continue;
     const start = dates.reduce((a, b) => (a < b ? a : b));
     const end = dates.reduce((a, b) => (a > b ? a : b));
@@ -180,7 +200,7 @@ async function main() {
       console.log(`Observado indisponível para ${city.name}: ${(e as Error).message}`);
       continue;
     }
-    for (const r of comparisons.filter((x) => x.cidade === city.name)) {
+    for (const r of comparisons.filter((x) => x.slug === slug)) {
       const key = r.variavel as MetricKey;
       if (!(key in OBSERVED)) continue;
       const obs = observed.get(r.data as string)?.[key];
@@ -191,11 +211,10 @@ async function main() {
         erro_consolidado: Math.abs(cons - obs),
       });
     }
-    void slug;
   }
   writeFileSync(join(OUT_DIR, "erros.csv"), toCsv(errors));
 
-  const summary: Record<string, unknown> = { gerado_em: new Date().toISOString(), byMetric, overall };
+  const summary: Record<string, unknown> = { gerado_em: new Date().toISOString(), byMetric, overall, byRegion };
   if (errors.length === 0) {
     console.log("\n2) Ainda não há valores observados para as datas coletadas "
       + "(a reanálise tem atraso de ~5 dias). Rode de novo mais tarde.");

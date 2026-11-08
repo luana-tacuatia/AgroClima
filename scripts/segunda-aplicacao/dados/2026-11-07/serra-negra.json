@@ -1,0 +1,87 @@
+{
+  "city": {
+    "name": "Serra Negra",
+    "slug": "serra-negra",
+    "latitude": -22.61222,
+    "longitude": -46.70056
+  },
+  "collectedAt": "2026-11-08T00:45:54.208Z",
+  "collectionDate": "2026-11-07",
+  "openMeteo": [
+    {
+      "source": "open-meteo",
+      "date": "2026-11-07",
+      "temperatureMinC": 20.1,
+      "temperatureMaxC": 29.8,
+      "humidityPercent": 86,
+      "precipitationMm": 11.1,
+      "precipitationProbabilityPercent": 100,
+      "windSpeedMaxKmh": 20.8,
+      "conditionCode": 96,
+      "conditionLabel": "Trovoada com granizo fraco"
+    },
+    {
+      "source": "open-meteo",
+      "date": "2026-11-08",
+      "temperatureMinC": 14.8,
+      "temperatureMaxC": 20.5,
+      "humidityPercent": 84,
+      "precipitationMm": 22.6,
+      "precipitationProbabilityPercent": 100,
+      "windSpeedMaxKmh": 27.7,
+      "conditionCode": 95,
+      "conditionLabel": "Trovoada"
+    },
+    {
+      "source": "open-meteo",
+      "date": "2026-11-09",
+      "temperatureMinC": 13.1,
+      "temperatureMaxC": 17.5,
+      "humidityPercent": 79,
+      "precipitationMm": 0.3,
+      "precipitationProbabilityPercent": 12,
+      "windSpeedMaxKmh": 25.9,
+      "conditionCode": 51,
+      "conditionLabel": "Garoa fraca"
+    }
+  ],
+  "weatherApi": [
+    {
+      "source": "weather-api",
+      "date": "2026-11-07",
+      "temperatureMinC": 19.1,
+      "temperatureMaxC": 29.5,
+      "humidityPercent": 85,
+      "precipitationMm": 17.67,
+      "precipitationProbabilityPercent": 85,
+      "windSpeedMaxKmh": 18,
+      "conditionCode": "1000",
+      "conditionLabel": "Sunny"
+    },
+    {
+      "source": "weather-api",
+      "date": "2026-11-08",
+      "temperatureMinC": 13.6,
+      "temperatureMaxC": 19.7,
+      "humidityPercent": 91,
+      "precipitationMm": 3.91,
+      "precipitationProbabilityPercent": 86,
+      "windSpeedMaxKmh": 29.9,
+      "conditionCode": "1009",
+      "conditionLabel": "Overcast"
+    },
+    {
+      "source": "weather-api",
+      "date": "2026-11-09",
+      "temperatureMinC": 12.7,
+      "temperatureMaxC": 16.2,
+      "humidityPercent": 88,
+      "precipitationMm": 0.42,
+      "precipitationProbabilityPercent": 55,
+      "windSpeedMaxKmh": 24.5,
+      "conditionCode": "1063",
+      "conditionLabel": "Patchy rain nearby"
+    }
+  ],
+  "errors": {}
+}

@@ -1,0 +1,87 @@
+{
+  "city": {
+    "name": "Pedreira",
+    "slug": "pedreira",
+    "latitude": -23.70675,
+    "longitude": -46.64982
+  },
+  "collectedAt": "2026-11-08T00:45:54.208Z",
+  "collectionDate": "2026-11-07",
+  "openMeteo": [
+    {
+      "source": "open-meteo",
+      "date": "2026-11-07",
+      "temperatureMinC": 18.9,
+      "temperatureMaxC": 28,
+      "humidityPercent": 89,
+      "precipitationMm": 12.7,
+      "precipitationProbabilityPercent": 100,
+      "windSpeedMaxKmh": 17.7,
+      "conditionCode": 96,
+      "conditionLabel": "Trovoada com granizo fraco"
+    },
+    {
+      "source": "open-meteo",
+      "date": "2026-11-08",
+      "temperatureMinC": 13.9,
+      "temperatureMaxC": 20.5,
+      "humidityPercent": 90,
+      "precipitationMm": 8.4,
+      "precipitationProbabilityPercent": 100,
+      "windSpeedMaxKmh": 19.6,
+      "conditionCode": 55,
+      "conditionLabel": "Garoa intensa"
+    },
+    {
+      "source": "open-meteo",
+      "date": "2026-11-09",
+      "temperatureMinC": 13.2,
+      "temperatureMaxC": 16.8,
+      "humidityPercent": 83,
+      "precipitationMm": 2.2,
+      "precipitationProbabilityPercent": 98,
+      "windSpeedMaxKmh": 18.8,
+      "conditionCode": 51,
+      "conditionLabel": "Garoa fraca"
+    }
+  ],
+  "weatherApi": [
+    {
+      "source": "weather-api",
+      "date": "2026-11-07",
+      "temperatureMinC": 18.9,
+      "temperatureMaxC": 30.2,
+      "humidityPercent": 83,
+      "precipitationMm": 22.77,
+      "precipitationProbabilityPercent": 88,
+      "windSpeedMaxKmh": 23.8,
+      "conditionCode": "1240",
+      "conditionLabel": "Light rain shower"
+    },
+    {
+      "source": "weather-api",
+      "date": "2026-11-08",
+      "temperatureMinC": 13.7,
+      "temperatureMaxC": 20.5,
+      "humidityPercent": 97,
+      "precipitationMm": 12.53,
+      "precipitationProbabilityPercent": 94,
+      "windSpeedMaxKmh": 22.7,
+      "conditionCode": "1240",
+      "conditionLabel": "Light rain shower"
+    },
+    {
+      "source": "weather-api",
+      "date": "2026-11-09",
+      "temperatureMinC": 12.9,
+      "temperatureMaxC": 14.9,
+      "humidityPercent": 96,
+      "precipitationMm": 4.1,
+      "precipitationProbabilityPercent": 89,
+      "windSpeedMaxKmh": 16.6,
+      "conditionCode": "1063",
+      "conditionLabel": "Patchy rain nearby"
+    }
+  ],
+  "errors": {}
+}

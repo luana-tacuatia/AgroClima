@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Campinas",
+    "slug": "campinas",
+    "latitude": -22.90556,
+    "longitude": -47.06083
+  },
+  {
+    "name": "Limeira",
+    "slug": "limeira",
+    "latitude": -22.56472,
+    "longitude": -47.40167
+  },
+  {
+    "name": "Mogi Mirim",
+    "slug": "mogi-mirim",
+    "latitude": -22.43194,
+    "longitude": -46.95778
+  },
+  {
+    "name": "Monte Mor",
+    "slug": "monte-mor",
+    "latitude": -22.94667,
+    "longitude": -47.31583
+  },
+  {
+    "name": "Pedreira",
+    "slug": "pedreira",
+    "latitude": -23.70675,
+    "longitude": -46.64982
+  },
+  {
+    "name": "Santa Bárbara d'Oeste",
+    "slug": "santa-barbara-d-oeste",
+    "latitude": -22.75361,
+    "longitude": -47.41361
+  },
+  {
+    "name": "Serra Negra",
+    "slug": "serra-negra",
+    "latitude": -22.61222,
+    "longitude": -46.70056
+  },
+  {
+    "name": "Socorro",
+    "slug": "socorro",
+    "latitude": -22.59139,
+    "longitude": -46.52889
+  }
+]

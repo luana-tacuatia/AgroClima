@@ -1,0 +1,408 @@
+[
+ {
+  "name": "Campinas",
+  "uf": "SP",
+  "state": "São Paulo",
+  "region": "Sudeste",
+  "group": "polo"
+ },
+ {
+  "name": "Limeira",
+  "uf": "SP",
+  "state": "São Paulo",
+  "region": "Sudeste",
+  "group": "polo"
+ },
+ {
+  "name": "Mogi Mirim",
+  "uf": "SP",
+  "state": "São Paulo",
+  "region": "Sudeste",
+  "group": "polo"
+ },
+ {
+  "name": "Monte Mor",
+  "uf": "SP",
+  "state": "São Paulo",
+  "region": "Sudeste",
+  "group": "polo"
+ },
+ {
+  "name": "Pedreira",
+  "uf": "SP",
+  "state": "São Paulo",
+  "region": "Sudeste",
+  "group": "polo"
+ },
+ {
+  "name": "Santa Bárbara d'Oeste",
+  "uf": "SP",
+  "state": "São Paulo",
+  "region": "Sudeste",
+  "group": "polo"
+ },
+ {
+  "name": "Serra Negra",
+  "uf": "SP",
+  "state": "São Paulo",
+  "region": "Sudeste",
+  "group": "polo"
+ },
+ {
+  "name": "Socorro",
+  "uf": "SP",
+  "state": "São Paulo",
+  "region": "Sudeste",
+  "group": "polo"
+ },
+ {
+  "name": "Castanhal",
+  "uf": "PA",
+  "state": "Pará",
+  "region": "Norte",
+  "group": "regional"
+ },
+ {
+  "name": "Altamira",
+  "uf": "PA",
+  "state": "Pará",
+  "region": "Norte",
+  "group": "regional"
+ },
+ {
+  "name": "Paragominas",
+  "uf": "PA",
+  "state": "Pará",
+  "region": "Norte",
+  "group": "regional"
+ },
+ {
+  "name": "Ji-Paraná",
+  "uf": "RO",
+  "state": "Rondônia",
+  "region": "Norte",
+  "group": "regional"
+ },
+ {
+  "name": "Cacoal",
+  "uf": "RO",
+  "state": "Rondônia",
+  "region": "Norte",
+  "group": "regional"
+ },
+ {
+  "name": "Rio Branco",
+  "uf": "AC",
+  "state": "Acre",
+  "region": "Norte",
+  "group": "regional"
+ },
+ {
+  "name": "Itacoatiara",
+  "uf": "AM",
+  "state": "Amazonas",
+  "region": "Norte",
+  "group": "regional"
+ },
+ {
+  "name": "Boa Vista",
+  "uf": "RR",
+  "state": "Roraima",
+  "region": "Norte",
+  "group": "regional"
+ },
+ {
+  "name": "Macapá",
+  "uf": "AP",
+  "state": "Amapá",
+  "region": "Norte",
+  "group": "regional"
+ },
+ {
+  "name": "Araguaína",
+  "uf": "TO",
+  "state": "Tocantins",
+  "region": "Norte",
+  "group": "regional"
+ },
+ {
+  "name": "Imperatriz",
+  "uf": "MA",
+  "state": "Maranhão",
+  "region": "Nordeste",
+  "group": "regional"
+ },
+ {
+  "name": "Picos",
+  "uf": "PI",
+  "state": "Piauí",
+  "region": "Nordeste",
+  "group": "regional"
+ },
+ {
+  "name": "Sobral",
+  "uf": "CE",
+  "state": "Ceará",
+  "region": "Nordeste",
+  "group": "regional"
+ },
+ {
+  "name": "Mossoró",
+  "uf": "RN",
+  "state": "Rio Grande do Norte",
+  "region": "Nordeste",
+  "group": "regional"
+ },
+ {
+  "name": "Campina Grande",
+  "uf": "PB",
+  "state": "Paraíba",
+  "region": "Nordeste",
+  "group": "regional"
+ },
+ {
+  "name": "Garanhuns",
+  "uf": "PE",
+  "state": "Pernambuco",
+  "region": "Nordeste",
+  "group": "regional"
+ },
+ {
+  "name": "Arapiraca",
+  "uf": "AL",
+  "state": "Alagoas",
+  "region": "Nordeste",
+  "group": "regional"
+ },
+ {
+  "name": "Itabaiana",
+  "uf": "SE",
+  "state": "Sergipe",
+  "region": "Nordeste",
+  "group": "regional"
+ },
+ {
+  "name": "Vitória da Conquista",
+  "uf": "BA",
+  "state": "Bahia",
+  "region": "Nordeste",
+  "group": "regional"
+ },
+ {
+  "name": "Juazeiro",
+  "uf": "BA",
+  "state": "Bahia",
+  "region": "Nordeste",
+  "group": "regional"
+ },
+ {
+  "name": "Rio Verde",
+  "uf": "GO",
+  "state": "Goiás",
+  "region": "Centro-Oeste",
+  "group": "regional"
+ },
+ {
+  "name": "Anápolis",
+  "uf": "GO",
+  "state": "Goiás",
+  "region": "Centro-Oeste",
+  "group": "regional"
+ },
+ {
+  "name": "Jataí",
+  "uf": "GO",
+  "state": "Goiás",
+  "region": "Centro-Oeste",
+  "group": "regional"
+ },
+ {
+  "name": "Brasília",
+  "uf": "DF",
+  "state": "Distrito Federal",
+  "region": "Centro-Oeste",
+  "group": "regional"
+ },
+ {
+  "name": "Sinop",
+  "uf": "MT",
+  "state": "Mato Grosso",
+  "region": "Centro-Oeste",
+  "group": "regional"
+ },
+ {
+  "name": "Rondonópolis",
+  "uf": "MT",
+  "state": "Mato Grosso",
+  "region": "Centro-Oeste",
+  "group": "regional"
+ },
+ {
+  "name": "Cáceres",
+  "uf": "MT",
+  "state": "Mato Grosso",
+  "region": "Centro-Oeste",
+  "group": "regional"
+ },
+ {
+  "name": "Dourados",
+  "uf": "MS",
+  "state": "Mato Grosso do Sul",
+  "region": "Centro-Oeste",
+  "group": "regional"
+ },
+ {
+  "name": "Campo Grande",
+  "uf": "MS",
+  "state": "Mato Grosso do Sul",
+  "region": "Centro-Oeste",
+  "group": "regional"
+ },
+ {
+  "name": "Ponta Porã",
+  "uf": "MS",
+  "state": "Mato Grosso do Sul",
+  "region": "Centro-Oeste",
+  "group": "regional"
+ },
+ {
+  "name": "Patos de Minas",
+  "uf": "MG",
+  "state": "Minas Gerais",
+  "region": "Sudeste",
+  "group": "regional"
+ },
+ {
+  "name": "Montes Claros",
+  "uf": "MG",
+  "state": "Minas Gerais",
+  "region": "Sudeste",
+  "group": "regional"
+ },
+ {
+  "name": "Varginha",
+  "uf": "MG",
+  "state": "Minas Gerais",
+  "region": "Sudeste",
+  "group": "regional"
+ },
+ {
+  "name": "Teófilo Otoni",
+  "uf": "MG",
+  "state": "Minas Gerais",
+  "region": "Sudeste",
+  "group": "regional"
+ },
+ {
+  "name": "Linhares",
+  "uf": "ES",
+  "state": "Espírito Santo",
+  "region": "Sudeste",
+  "group": "regional"
+ },
+ {
+  "name": "Venda Nova do Imigrante",
+  "uf": "ES",
+  "state": "Espírito Santo",
+  "region": "Sudeste",
+  "group": "regional"
+ },
+ {
+  "name": "Nova Friburgo",
+  "uf": "RJ",
+  "state": "Rio de Janeiro",
+  "region": "Sudeste",
+  "group": "regional"
+ },
+ {
+  "name": "Campos dos Goytacazes",
+  "uf": "RJ",
+  "state": "Rio de Janeiro",
+  "region": "Sudeste",
+  "group": "regional"
+ },
+ {
+  "name": "Presidente Prudente",
+  "uf": "SP",
+  "state": "São Paulo",
+  "region": "Sudeste",
+  "group": "regional"
+ },
+ {
+  "name": "Registro",
+  "uf": "SP",
+  "state": "São Paulo",
+  "region": "Sudeste",
+  "group": "regional"
+ },
+ {
+  "name": "Passo Fundo",
+  "uf": "RS",
+  "state": "Rio Grande do Sul",
+  "region": "Sul",
+  "group": "regional"
+ },
+ {
+  "name": "Santa Cruz do Sul",
+  "uf": "RS",
+  "state": "Rio Grande do Sul",
+  "region": "Sul",
+  "group": "regional"
+ },
+ {
+  "name": "Ijuí",
+  "uf": "RS",
+  "state": "Rio Grande do Sul",
+  "region": "Sul",
+  "group": "regional"
+ },
+ {
+  "name": "Pelotas",
+  "uf": "RS",
+  "state": "Rio Grande do Sul",
+  "region": "Sul",
+  "group": "regional"
+ },
+ {
+  "name": "Chapecó",
+  "uf": "SC",
+  "state": "Santa Catarina",
+  "region": "Sul",
+  "group": "regional"
+ },
+ {
+  "name": "Lages",
+  "uf": "SC",
+  "state": "Santa Catarina",
+  "region": "Sul",
+  "group": "regional"
+ },
+ {
+  "name": "Concórdia",
+  "uf": "SC",
+  "state": "Santa Catarina",
+  "region": "Sul",
+  "group": "regional"
+ },
+ {
+  "name": "Francisco Beltrão",
+  "uf": "PR",
+  "state": "Paraná",
+  "region": "Sul",
+  "group": "regional"
+ },
+ {
+  "name": "Cascavel",
+  "uf": "PR",
+  "state": "Paraná",
+  "region": "Sul",
+  "group": "regional"
+ },
+ {
+  "name": "Guarapuava",
+  "uf": "PR",
+  "state": "Paraná",
+  "region": "Sul",
+  "group": "regional"
+ }
+]

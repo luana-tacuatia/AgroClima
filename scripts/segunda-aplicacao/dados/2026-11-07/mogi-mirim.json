@@ -1,0 +1,87 @@
+{
+  "city": {
+    "name": "Mogi Mirim",
+    "slug": "mogi-mirim",
+    "latitude": -22.43194,
+    "longitude": -46.95778
+  },
+  "collectedAt": "2026-11-08T00:45:54.208Z",
+  "collectionDate": "2026-11-07",
+  "openMeteo": [
+    {
+      "source": "open-meteo",
+      "date": "2026-11-07",
+      "temperatureMinC": 20.7,
+      "temperatureMaxC": 32.9,
+      "humidityPercent": 84,
+      "precipitationMm": 5.2,
+      "precipitationProbabilityPercent": 98,
+      "windSpeedMaxKmh": 31.3,
+      "conditionCode": 95,
+      "conditionLabel": "Trovoada"
+    },
+    {
+      "source": "open-meteo",
+      "date": "2026-11-08",
+      "temperatureMinC": 16.3,
+      "temperatureMaxC": 22.2,
+      "humidityPercent": 79,
+      "precipitationMm": 14.3,
+      "precipitationProbabilityPercent": 100,
+      "windSpeedMaxKmh": 21.9,
+      "conditionCode": 95,
+      "conditionLabel": "Trovoada"
+    },
+    {
+      "source": "open-meteo",
+      "date": "2026-11-09",
+      "temperatureMinC": 15.2,
+      "temperatureMaxC": 20,
+      "humidityPercent": 74,
+      "precipitationMm": 0.2,
+      "precipitationProbabilityPercent": 16,
+      "windSpeedMaxKmh": 19.8,
+      "conditionCode": 51,
+      "conditionLabel": "Garoa fraca"
+    }
+  ],
+  "weatherApi": [
+    {
+      "source": "weather-api",
+      "date": "2026-11-07",
+      "temperatureMinC": 20.4,
+      "temperatureMaxC": 32.3,
+      "humidityPercent": 79,
+      "precipitationMm": 40.5,
+      "precipitationProbabilityPercent": 80,
+      "windSpeedMaxKmh": 22.7,
+      "conditionCode": "1000",
+      "conditionLabel": "Sunny"
+    },
+    {
+      "source": "weather-api",
+      "date": "2026-11-08",
+      "temperatureMinC": 16.5,
+      "temperatureMaxC": 22.5,
+      "humidityPercent": 85,
+      "precipitationMm": 4.61,
+      "precipitationProbabilityPercent": 83,
+      "windSpeedMaxKmh": 25.2,
+      "conditionCode": "1009",
+      "conditionLabel": "Overcast"
+    },
+    {
+      "source": "weather-api",
+      "date": "2026-11-09",
+      "temperatureMinC": 13.9,
+      "temperatureMaxC": 19.3,
+      "humidityPercent": 81,
+      "precipitationMm": 0.44,
+      "precipitationProbabilityPercent": 50,
+      "windSpeedMaxKmh": 16.2,
+      "conditionCode": "1009",
+      "conditionLabel": "Overcast"
+    }
+  ],
+  "errors": {}
+}
