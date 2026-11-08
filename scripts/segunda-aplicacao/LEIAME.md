@@ -12,11 +12,14 @@ Na raiz do projeto, com `WEATHER_API_KEY` no `.env.local`:
 npx tsx scripts/segunda-aplicacao/coletar.ts
 ```
 
-- Consulta as 8 cidades dos polos do grupo (Campinas, Limeira, Mogi Mirim, Monte Mor, Pedreira,
-  Santa Bárbara d'Oeste, Serra Negra e Socorro) nas duas fontes.
+- Consulta as 58 cidades de `scripts/cidades-estudo.json` nas duas fontes: as 8 dos polos do grupo
+  (Campinas, Limeira, Mogi Mirim, Monte Mor, Pedreira, Santa Bárbara d'Oeste, Serra Negra e Socorro)
+  e 10 municípios-polo agrícolas por região, cobrindo os 27 estados.
 - Na primeira execução, salva as coordenadas em `cidades.json`; as coletas seguintes usam os mesmos pontos.
 - Cada coleta fica em `dados/AAAA-MM-DD/<cidade>.json`, com a hora da consulta.
-- Consome 8 chamadas por fonte por coleta (bem abaixo dos limites gratuitos).
+- Consome 58 chamadas por fonte por coleta (bem abaixo dos limites gratuitos).
+- Para gravar as mesmas cidades no histórico do site publicado:
+  `node scripts/registrar-no-site.mjs https://SEU-ENDERECO.vercel.app`
 - Se alguma fonte falhar, rode de novo mais tarde no mesmo dia (os arquivos do dia são substituídos).
 
 ## 2. Análise (pode ser rodada quantas vezes quiser)

@@ -22,20 +22,19 @@ const DIR = join(ROOT, "scripts", "segunda-aplicacao");
 const DATA_DIR = join(DIR, "dados");
 const CITIES_FILE = join(DIR, "cidades.json");
 
-// Cidades dos polos do grupo (todas no estado de São Paulo).
-const CITY_NAMES = [
-  "Campinas",
-  "Limeira",
-  "Mogi Mirim",
-  "Monte Mor",
-  "Pedreira",
-  "Santa Bárbara d'Oeste",
-  "Serra Negra",
-  "Socorro",
-];
+// Lista do estudo: 8 cidades dos polos do grupo + 10 municípios-polo agrícolas por região
+// (todos os 27 estados). Editar em scripts/cidades-estudo.json.
+const LIST_FILE = join(ROOT, "scripts", "cidades-estudo.json");
 
-export interface City {
+interface CityListItem {
   name: string;
+  uf: string;
+  state: string;
+  region: string;
+  group: "polo" | "regional";
+}
+
+export interface City extends CityListItem {
   slug: string;
   latitude: number;
   longitude: number;
@@ -75,23 +74,37 @@ export function localDate(date = new Date()): string {
   return new Intl.DateTimeFormat("en-CA", { timeZone: "America/Sao_Paulo" }).format(date);
 }
 
+const norm = (v: string | null | undefined) =>
+  (v ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+
 /**
  * Coordenadas das cidades: geocodificadas na primeira execução e salvas em cidades.json,
  * para que todas as coletas usem exatamente os mesmos pontos.
  */
 async function loadCities(): Promise<City[]> {
-  if (existsSync(CITIES_FILE)) return JSON.parse(readFileSync(CITIES_FILE, "utf-8"));
-  const cities: City[] = [];
-  for (const name of CITY_NAMES) {
-    const results = await searchLocations(name);
-    const match = results.find(
-      (r) => r.state === "São Paulo" && (r.country === "Brasil" || r.country === "Brazil"),
-    );
-    if (!match) throw new Error(`Cidade não encontrada no estado de São Paulo: ${name}`);
-    cities.push({ name, slug: slugify(name), latitude: match.latitude, longitude: match.longitude });
+  const list: CityListItem[] = JSON.parse(readFileSync(LIST_FILE, "utf-8"));
+  if (existsSync(CITIES_FILE)) {
+    const saved: City[] = JSON.parse(readFileSync(CITIES_FILE, "utf-8"));
+    if (saved.length === list.length && saved.every((c) => c.uf)) return saved;
+    console.log("Lista de cidades mudou: as coordenadas serão geocodificadas de novo.");
   }
+  const cities: City[] = [];
+  const missing: string[] = [];
+  for (const item of list) {
+    const results = await searchLocations(item.name);
+    const match = results.find(
+      (r) => norm(r.state) === norm(item.state) && ["brasil", "brazil"].includes(norm(r.country)),
+    );
+    if (!match) {
+      missing.push(`${item.name}/${item.uf}`);
+      continue;
+    }
+    cities.push({ ...item, slug: slugify(`${item.name}-${item.uf}`), latitude: match.latitude,
+      longitude: match.longitude });
+  }
+  if (missing.length) throw new Error(`Cidades não encontradas na geocodificação: ${missing.join(", ")}`);
   writeFileSync(CITIES_FILE, JSON.stringify(cities, null, 2));
-  console.log(`Coordenadas salvas em ${CITIES_FILE}`);
+  console.log(`Coordenadas de ${cities.length} cidades salvas em ${CITIES_FILE}`);
   return cities;
 }
 
@@ -119,6 +132,7 @@ async function main() {
   mkdirSync(outDir, { recursive: true });
 
   const summary: Record<string, string>[] = [];
+  const failed: string[] = [];
   let failures = 0;
 
   for (const city of cities) {
@@ -129,7 +143,10 @@ async function main() {
     const errors: Record<string, string> = {};
     if (om.status === "rejected") errors["open-meteo"] = String(om.reason?.message ?? om.reason);
     if (wa.status === "rejected") errors["weather-api"] = String(wa.reason?.message ?? wa.reason);
-    if (Object.keys(errors).length) failures++;
+    if (Object.keys(errors).length) {
+      failures++;
+      failed.push(`${city.name}/${city.uf}: ${Object.values(errors).join(" | ")}`);
+    }
 
     const collection: Collection = {
       city,
@@ -141,21 +158,23 @@ async function main() {
     };
     writeFileSync(join(outDir, `${city.slug}.json`), JSON.stringify(collection, null, 2));
 
-    const row: Record<string, string> = { Cidade: city.name };
+    const row: Record<string, string> = { Região: city.region, Cidade: `${city.name}/${city.uf}` };
     for (const dayA of collection.openMeteo ?? []) {
       const dayB = collection.weatherApi?.find((d) => d.date === dayA.date);
       row[dayA.date.slice(5).split("-").reverse().join("/")] = dayB
         ? PT[compareDay(dayA.date, dayA, dayB).overallAgreement]
         : "só 1 fonte";
     }
-    if (Object.keys(errors).length) row.Erro = Object.values(errors).join(" | ");
     summary.push(row);
   }
 
   console.log(`\nColeta de ${collectionDate} (${now.toLocaleTimeString("pt-BR")}) — concordância geral por dia:`);
   console.table(summary);
-  console.log(`Arquivos salvos em ${outDir}`);
-  if (failures) console.log(`Atenção: ${failures} cidade(s) com falha em alguma fonte. Rode de novo mais tarde.`);
+  console.log(`Arquivos salvos em ${outDir} (${cities.length - failures} de ${cities.length} cidades completas)`);
+  if (failures) {
+    console.log(`Atenção: ${failures} cidade(s) com falha em alguma fonte. Rode de novo mais tarde:`);
+    for (const f of failed) console.log(`  - ${f}`);
+  }
 }
 
 main().catch((error) => {

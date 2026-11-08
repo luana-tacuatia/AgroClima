@@ -1,0 +1,87 @@
+{
+  "city": {
+    "name": "Monte Mor",
+    "slug": "monte-mor",
+    "latitude": -22.94667,
+    "longitude": -47.31583
+  },
+  "collectedAt": "2026-11-08T00:45:54.208Z",
+  "collectionDate": "2026-11-07",
+  "openMeteo": [
+    {
+      "source": "open-meteo",
+      "date": "2026-11-07",
+      "temperatureMinC": 20.8,
+      "temperatureMaxC": 31.2,
+      "humidityPercent": 87,
+      "precipitationMm": 10.4,
+      "precipitationProbabilityPercent": 100,
+      "windSpeedMaxKmh": 20,
+      "conditionCode": 96,
+      "conditionLabel": "Trovoada com granizo fraco"
+    },
+    {
+      "source": "open-meteo",
+      "date": "2026-11-08",
+      "temperatureMinC": 15.7,
+      "temperatureMaxC": 21.9,
+      "humidityPercent": 81,
+      "precipitationMm": 11.3,
+      "precipitationProbabilityPercent": 100,
+      "windSpeedMaxKmh": 23.8,
+      "conditionCode": 95,
+      "conditionLabel": "Trovoada"
+    },
+    {
+      "source": "open-meteo",
+      "date": "2026-11-09",
+      "temperatureMinC": 14.4,
+      "temperatureMaxC": 20.4,
+      "humidityPercent": 72,
+      "precipitationMm": 0,
+      "precipitationProbabilityPercent": 1,
+      "windSpeedMaxKmh": 22.4,
+      "conditionCode": 3,
+      "conditionLabel": "Nublado"
+    }
+  ],
+  "weatherApi": [
+    {
+      "source": "weather-api",
+      "date": "2026-11-07",
+      "temperatureMinC": 21.6,
+      "temperatureMaxC": 33.1,
+      "humidityPercent": 74,
+      "precipitationMm": 7.39,
+      "precipitationProbabilityPercent": 75,
+      "windSpeedMaxKmh": 25.2,
+      "conditionCode": "1036",
+      "conditionLabel": "Smoky haze"
+    },
+    {
+      "source": "weather-api",
+      "date": "2026-11-08",
+      "temperatureMinC": 16.1,
+      "temperatureMaxC": 22.1,
+      "humidityPercent": 81,
+      "precipitationMm": 3.33,
+      "precipitationProbabilityPercent": 80,
+      "windSpeedMaxKmh": 25.6,
+      "conditionCode": "1009",
+      "conditionLabel": "Overcast"
+    },
+    {
+      "source": "weather-api",
+      "date": "2026-11-09",
+      "temperatureMinC": 14.9,
+      "temperatureMaxC": 18.9,
+      "humidityPercent": 76,
+      "precipitationMm": 0.21,
+      "precipitationProbabilityPercent": 34,
+      "windSpeedMaxKmh": 23.4,
+      "conditionCode": "1009",
+      "conditionLabel": "Overcast"
+    }
+  ],
+  "errors": {}
+}

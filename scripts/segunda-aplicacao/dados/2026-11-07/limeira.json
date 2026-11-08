@@ -1,0 +1,87 @@
+{
+  "city": {
+    "name": "Limeira",
+    "slug": "limeira",
+    "latitude": -22.56472,
+    "longitude": -47.40167
+  },
+  "collectedAt": "2026-11-08T00:45:54.208Z",
+  "collectionDate": "2026-11-07",
+  "openMeteo": [
+    {
+      "source": "open-meteo",
+      "date": "2026-11-07",
+      "temperatureMinC": 21.6,
+      "temperatureMaxC": 32.6,
+      "humidityPercent": 83,
+      "precipitationMm": 7,
+      "precipitationProbabilityPercent": 98,
+      "windSpeedMaxKmh": 25,
+      "conditionCode": 96,
+      "conditionLabel": "Trovoada com granizo fraco"
+    },
+    {
+      "source": "open-meteo",
+      "date": "2026-11-08",
+      "temperatureMinC": 15.9,
+      "temperatureMaxC": 23.2,
+      "humidityPercent": 81,
+      "precipitationMm": 16,
+      "precipitationProbabilityPercent": 100,
+      "windSpeedMaxKmh": 20.4,
+      "conditionCode": 95,
+      "conditionLabel": "Trovoada"
+    },
+    {
+      "source": "open-meteo",
+      "date": "2026-11-09",
+      "temperatureMinC": 15.1,
+      "temperatureMaxC": 20.8,
+      "humidityPercent": 73,
+      "precipitationMm": 0,
+      "precipitationProbabilityPercent": 6,
+      "windSpeedMaxKmh": 20.4,
+      "conditionCode": 3,
+      "conditionLabel": "Nublado"
+    }
+  ],
+  "weatherApi": [
+    {
+      "source": "weather-api",
+      "date": "2026-11-07",
+      "temperatureMinC": 21.4,
+      "temperatureMaxC": 33.4,
+      "humidityPercent": 77,
+      "precipitationMm": 15.4,
+      "precipitationProbabilityPercent": 78,
+      "windSpeedMaxKmh": 23.4,
+      "conditionCode": "1036",
+      "conditionLabel": "Smoky haze"
+    },
+    {
+      "source": "weather-api",
+      "date": "2026-11-08",
+      "temperatureMinC": 16.3,
+      "temperatureMaxC": 22.2,
+      "humidityPercent": 83,
+      "precipitationMm": 2.82,
+      "precipitationProbabilityPercent": 80,
+      "windSpeedMaxKmh": 22.3,
+      "conditionCode": "1009",
+      "conditionLabel": "Overcast"
+    },
+    {
+      "source": "weather-api",
+      "date": "2026-11-09",
+      "temperatureMinC": 14.7,
+      "temperatureMaxC": 19.6,
+      "humidityPercent": 78,
+      "precipitationMm": 0.32,
+      "precipitationProbabilityPercent": 41,
+      "windSpeedMaxKmh": 20.5,
+      "conditionCode": "1009",
+      "conditionLabel": "Overcast"
+    }
+  ],
+  "errors": {}
+}

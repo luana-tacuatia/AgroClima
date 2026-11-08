@@ -1,0 +1,87 @@
+{
+  "city": {
+    "name": "Campinas",
+    "slug": "campinas",
+    "latitude": -22.90556,
+    "longitude": -47.06083
+  },
+  "collectedAt": "2026-11-08T00:45:54.208Z",
+  "collectionDate": "2026-11-07",
+  "openMeteo": [
+    {
+      "source": "open-meteo",
+      "date": "2026-11-07",
+      "temperatureMinC": 20.9,
+      "temperatureMaxC": 30.3,
+      "humidityPercent": 85,
+      "precipitationMm": 17.8,
+      "precipitationProbabilityPercent": 100,
+      "windSpeedMaxKmh": 12.3,
+      "conditionCode": 96,
+      "conditionLabel": "Trovoada com granizo fraco"
+    },
+    {
+      "source": "open-meteo",
+      "date": "2026-11-08",
+      "temperatureMinC": 15.5,
+      "temperatureMaxC": 21.7,
+      "humidityPercent": 81,
+      "precipitationMm": 7.8,
+      "precipitationProbabilityPercent": 100,
+      "windSpeedMaxKmh": 20.2,
+      "conditionCode": 95,
+      "conditionLabel": "Trovoada"
+    },
+    {
+      "source": "open-meteo",
+      "date": "2026-11-09",
+      "temperatureMinC": 14.4,
+      "temperatureMaxC": 19.7,
+      "humidityPercent": 74,
+      "precipitationMm": 0.1,
+      "precipitationProbabilityPercent": 2,
+      "windSpeedMaxKmh": 23.4,
+      "conditionCode": 51,
+      "conditionLabel": "Garoa fraca"
+    }
+  ],
+  "weatherApi": [
+    {
+      "source": "weather-api",
+      "date": "2026-11-07",
+      "temperatureMinC": 19.8,
+      "temperatureMaxC": 32.2,
+      "humidityPercent": 80,
+      "precipitationMm": 9.21,
+      "precipitationProbabilityPercent": 81,
+      "windSpeedMaxKmh": 26.6,
+      "conditionCode": "1036",
+      "conditionLabel": "Smoky haze"
+    },
+    {
+      "source": "weather-api",
+      "date": "2026-11-08",
+      "temperatureMinC": 15,
+      "temperatureMaxC": 20.9,
+      "humidityPercent": 87,
+      "precipitationMm": 2.95,
+      "precipitationProbabilityPercent": 82,
+      "windSpeedMaxKmh": 28.4,
+      "conditionCode": "1063",
+      "conditionLabel": "Patchy rain nearby"
+    },
+    {
+      "source": "weather-api",
+      "date": "2026-11-09",
+      "temperatureMinC": 14.1,
+      "temperatureMaxC": 18.1,
+      "humidityPercent": 83,
+      "precipitationMm": 0.24,
+      "precipitationProbabilityPercent": 41,
+      "windSpeedMaxKmh": 28.1,
+      "conditionCode": "1009",
+      "conditionLabel": "Overcast"
+    }
+  ],
+  "errors": {}
+}

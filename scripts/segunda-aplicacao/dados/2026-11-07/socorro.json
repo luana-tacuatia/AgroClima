@@ -1,0 +1,87 @@
+{
+  "city": {
+    "name": "Socorro",
+    "slug": "socorro",
+    "latitude": -22.59139,
+    "longitude": -46.52889
+  },
+  "collectedAt": "2026-11-08T00:45:54.208Z",
+  "collectionDate": "2026-11-07",
+  "openMeteo": [
+    {
+      "source": "open-meteo",
+      "date": "2026-11-07",
+      "temperatureMinC": 20.3,
+      "temperatureMaxC": 30.5,
+      "humidityPercent": 85,
+      "precipitationMm": 6.9,
+      "precipitationProbabilityPercent": 100,
+      "windSpeedMaxKmh": 25.4,
+      "conditionCode": 96,
+      "conditionLabel": "Trovoada com granizo fraco"
+    },
+    {
+      "source": "open-meteo",
+      "date": "2026-11-08",
+      "temperatureMinC": 15.6,
+      "temperatureMaxC": 20.8,
+      "humidityPercent": 83,
+      "precipitationMm": 14.6,
+      "precipitationProbabilityPercent": 100,
+      "windSpeedMaxKmh": 27.2,
+      "conditionCode": 81,
+      "conditionLabel": "Pancadas de chuva moderadas"
+    },
+    {
+      "source": "open-meteo",
+      "date": "2026-11-09",
+      "temperatureMinC": 14.1,
+      "temperatureMaxC": 19.8,
+      "humidityPercent": 77,
+      "precipitationMm": 0.1,
+      "precipitationProbabilityPercent": 44,
+      "windSpeedMaxKmh": 23.1,
+      "conditionCode": 51,
+      "conditionLabel": "Garoa fraca"
+    }
+  ],
+  "weatherApi": [
+    {
+      "source": "weather-api",
+      "date": "2026-11-07",
+      "temperatureMinC": 16.3,
+      "temperatureMaxC": 33.4,
+      "humidityPercent": 83,
+      "precipitationMm": 18.87,
+      "precipitationProbabilityPercent": 82,
+      "windSpeedMaxKmh": 18,
+      "conditionCode": "1000",
+      "conditionLabel": "Sunny"
+    },
+    {
+      "source": "weather-api",
+      "date": "2026-11-08",
+      "temperatureMinC": 18.5,
+      "temperatureMaxC": 24,
+      "humidityPercent": 86,
+      "precipitationMm": 4.2,
+      "precipitationProbabilityPercent": 82,
+      "windSpeedMaxKmh": 23,
+      "conditionCode": "1240",
+      "conditionLabel": "Light rain shower"
+    },
+    {
+      "source": "weather-api",
+      "date": "2026-11-09",
+      "temperatureMinC": 14.7,
+      "temperatureMaxC": 21,
+      "humidityPercent": 82,
+      "precipitationMm": 0.33,
+      "precipitationProbabilityPercent": 45,
+      "windSpeedMaxKmh": 15.8,
+      "conditionCode": "1009",
+      "conditionLabel": "Overcast"
+    }
+  ],
+  "errors": {}
+}
